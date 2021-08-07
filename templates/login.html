@@ -1,0 +1,60 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Login {% endblock %} {% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href='/'><i class="fas fa-home"></i> Home</a>
+                    <span>Login</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Script Begin -->
+{% if change_status == True %}
+<script>
+    swal("Password Changed Successfully", "Go to Login Page & Login Again", "success")
+</script>
+{% endif %}
+<!-- Script End -->
+
+<!-- Login Section Begin -->
+<div class="register-login-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="login-form">
+                    <h2>Login</h2>
+                    {% for msg in messages %}
+                    <div class="alert alert-danger" style="text-align: center;">
+                        <strong>{{msg}}</strong>
+                    </div>
+                    {% endfor %}
+                    <form action="/login" method="post">
+                        {% csrf_token %}
+                        <div class="group-input">
+                            <label for="email">Email address *</label>
+                            <input type="email" name="email" value="{{email}}">
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password *</label>
+                            <input type="password" name="password">
+                        </div>
+                        <input type="submit" class="site-btn login-btn" value="LOGIN">
+                        <a href="/forget_password" class="or-login" style="float: right; color: #FE980F; font-size: 18px; text-decoration: underline;">Forget Password?</a>
+                    </form>
+                    <br>
+                    <div class="switch-login">
+                        <a href="/signup" class="or-login">Or Create An Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Login Section End -->
+{% endblock content %}

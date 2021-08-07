@@ -1,0 +1,96 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Home {% endblock title %} {% block content %}
+<!-- Hero Section Begin -->
+<section class="hero-section">
+    <div class="hero-items owl-carousel">
+        {% for hero in heros %}
+        <div class="single-hero-items set-bg" data-setbg="{{hero.hero_pic.url}}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <span>{{hero.hero_title}}</span>
+                        <h1>{{hero.hero_header}}</h1>
+                        <p>{{hero.hero_headline}}</p>
+                        <a href="/shop/{{hero.id}}" class="primary-btn" target="_blank">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Banner Section Begin -->
+<div class="banner-section spad">
+    <div class="container-fluid">
+        <div class="row">
+            {% for banner in banners %}
+            <div class="col-lg-4">
+                <div class="single-banner" style="border: 5px solid black;">
+                    <a href="/shop/{{banner.id}}" target="_blank">
+                        <img src="{{banner.banner_pic.url}}" alt="">
+                        <div class="inner-text">
+                            <h4>{{banner.banner_title}}</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Banner Section End -->
+
+<!-- Slider Section Begin -->
+{% for slider in sliders %}
+<section class="slider spad">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="product-large set-bg" data-setbg="{{slider.large_pic.url}}">
+                    <h2>{{slider.slider_title}}</h2> <br>
+                    <a href="{% url 'shopbycategory' slider.category.id %}" target="_blank">Discover More</a>
+                </div>
+            </div>
+            <div class="col-lg-8 offset-lg-1">
+                <div class="filter-control">
+                    <ul>
+                        <li class="active">
+                            Products
+                        </li>
+                    </ul>
+                </div>
+                <form action="/add_to_cart" method="POST">
+                    {% csrf_token %}
+                    <div class="product-slider owl-carousel">
+                        {% for product in products %} {% if product.category == slider.category %}
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="{{product.product_pic.url}}" alt="">
+                                <div class="icon">
+                                    <input type="hidden" name="quantity" id="quantity" value="1">
+                                    <button class="primary-btn pd-cart add_to_cart" type="submit" value="{{product.id}}" name="product_id" style="font-size: 22px; padding: 0px; border-radius: 7px; border: none;"><i class="fal fa-shopping-cart"></i></button>
+                                </div>
+                                <ul>
+                                    <li class="quick-view"><a href="{% url 'product' product.id %}" target="_blank">+ Quick View</a></li>
+                                </ul>
+                            </div>
+                            <div class="pi-text">
+                                <a href="{% url 'product' product.id %}">
+                                    <h5>{{product.brand}}</h5>
+                                </a>
+                                <div class="product-price">
+                                    <i class="far fa-rupee-sign" style="font-size: 19px;"></i>{{product.product_price}}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %} {% endfor %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+<!-- Slider Section End -->
+{% endblock content %}

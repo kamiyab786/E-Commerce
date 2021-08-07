@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Product {% endblock title %} {% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="/"><i class="fas fa-home"></i> Home</a>
+                    <a href="/shop"> Shop</a>
+                    <span>Product</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Product Section Begin -->
+<section class="product-shop spad page-details">
+    <form action="/add_to_cart" method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {% for product in products %}
+                            <img class="product-big-img" src="{{product.product_pic.url}}" alt=""> {% endfor %}
+                        </div>
+                        <div class="col-lg-6">
+                            {% for product in products %}
+                            <div class="product-details">
+                                <div class="pd-title">
+                                    <span>{{product.category}}</span>
+                                    <h3>{{product.brand}}</h3>
+                                    <h4>{{product.product_name}}</h4>
+                                </div>
+                                <div class="pd-desc">
+                                    <p>{{product.description}}</p>
+                                    <h4>Price: <i class="far fa-rupee-sign" style="font-size: 23px;"></i>{{product.product_price}}</h4> <br>
+                                    <h4>Color: <i class="fas fa-circle" style="font-size: 25px;" color="{{product.color}}"></i></h4>
+                                </div>
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <a class="dec_qty qtybtn">-</a>
+                                        <input type="number" id="quantity" name="quantity" value="1" />
+                                        <a class="inc_qty qtybtn">+</a>
+                                    </div>
+                                    <input type="hidden" name="product_id" value="{{product.id}}">
+                                    <button class="primary-btn pd-cart add_to_cart" type="submit" pid="{{product.id}}">Add To Cart</button>
+                                </div>
+                                <ul class="pd-tags">
+                                    <li><span>CATEGORIES</span>: {{product.category}}, {{product.sub_category}}</li>
+                                </ul>
+                            </div>
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
+<!-- Product Section End -->
+{% endblock content %}

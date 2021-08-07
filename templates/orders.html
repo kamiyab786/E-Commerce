@@ -1,0 +1,159 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Orders {% endblock title %} {% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="/"><i class="fas fa-home"></i> Home</a>
+                    <span>Orders</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Order Type Section Begin -->
+<div style="text-align: center;">
+    <div class="form-check-inline" onclick="document.getElementById('all_orders').style.display = 'block'; document.getElementById('delivered').style.display = 'none';document.getElementById('cancel').style.display = 'none';">
+        <label class="form-check-label" for="radio1" style="font-size: 30px;">
+            <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked style="height: 20px; width: 20px;">All Orders
+        </label>
+    </div>
+    <div class="form-check-inline" onclick="document.getElementById('all_orders').style.display = 'none';document.getElementById('delivered').style.display = 'block';document.getElementById('cancel').style.display = 'none';">
+        <label class="form-check-label" for="radio2" style="font-size: 30px;">
+            <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2" style="height: 20px; width: 20px;">Delivered
+        </label>
+    </div>
+    <div class="form-check-inline" onclick="document.getElementById('all_orders').style.display = 'none';document.getElementById('delivered').style.display = 'none';document.getElementById('cancel').style.display = 'block';">
+        <label class="form-check-label" for="radio3" style="font-size: 30px;">
+            <input type="radio" class="form-check-input" id="radio3" name="optradio" value="option3" style="height: 20px; width: 20px;">Canceled
+        </label>
+    </div>
+</div>
+<!-- Order Type Section End -->
+
+<!-- Order Section Begin -->
+<section class="shopping-cart spad" id="all_orders">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Order Date</th>
+                                <th>Order Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for oid in order_id reversed %} {% for order in orders %} {% if oid == order.order_id %}
+                            <tr>
+                                <td class="p-price first-row">Order{{forloop.parentloop.counter}}</td>
+                                <td class="cart-pic first-row"><img style="height: 99px; width: 81px;" src="{{order.product.product_pic.url}}" alt=""></td>
+                                <td class="p-price first-row">{{order.product.brand}}</td>
+                                {% if order.order_status == 'Delivered' %}
+                                <td class="p-price first-row">Delivered On {{order.delivery_date}}</td>
+                                {% elif order.order_status == 'Cancel' %}
+                                <td class="p-price first-row">Canceled By Customer On {{order.delivery_date}}</td>
+                                {% elif order.order_status == 'Rejected' %}
+                                <td class="p-price first-row">Rejected By Company On {{order.delivery_date}}</td>
+                                {% else %}
+                                <td class="p-price first-row">Ordered on {{order.order_date}}</td>
+                                {% endif %}
+                                <td class="p-price first-row">
+                                    <a href="{% url 'order_details' order.order_id %}" style="color: #FE980F;">
+                                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 30px;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %} {% endfor %} {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="shopping-cart spad" id="delivered" style="display: none;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Order Date</th>
+                                <th>Order Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for oid in order_id reversed %} {% for order in orders %} {% if oid == order.order_id %} {% if order.order_status == 'Delivered' %}
+                            <tr>
+                                <td class="p-price first-row">Order{{forloop.parentloop.counter}}</td>
+                                <td class="cart-pic first-row"><img style="height: 99px; width: 81px;" src="{{order.product.product_pic.url}}" alt=""></td>
+                                <td class="p-price first-row">{{order.product.product_name}}</td>
+                                <td class="p-price first-row">Delivered On {{order.delivery_date}}</td>
+                                <td class="p-price first-row">
+                                    <a href="{% url 'order_details' order.order_id %}" style="color: #FE980F;">
+                                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 30px;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %} {% endif %} {% endfor %} {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="shopping-cart spad" id="cancel" style="display: none;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Order Date</th>
+                                <th>Order Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for oid in order_id reversed %} {% for order in orders %} {% if oid == order.order_id %} {% if order.order_status == 'Cancel' or order.order_status == 'Rejected' %}
+                            <tr>
+                                <td class="p-price first-row">Order{{forloop.parentloop.counter}}</td>
+                                <td class="cart-pic first-row"><img style="height: 99px; width: 81px;" src="{{order.product.product_pic.url}}" alt=""></td>
+                                <td class="p-price first-row">{{order.product.product_name}}</td>
+                                {% if order.order_status == 'Cancel' %}
+                                <td class="p-price first-row">Canceled By Customer On {{order.delivery_date}}</td>
+                                {% elif order.order_status == 'Rejected' %}
+                                <td class="p-price first-row">Rejected By Company On {{order.delivery_date}}</td>
+                                {% endif %}
+                                <td class="p-price first-row">
+                                    <a href="{% url 'order_details' order.order_id %}" style="color: #FE980F;">
+                                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 30px;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %} {% endif %} {% endfor %} {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Order Section End -->
+{% endblock content %}

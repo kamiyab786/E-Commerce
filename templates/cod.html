@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Cash On Delivery {% endblock %} {% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href='/'><i class="fas fa-home"></i> Home</a>
+                    <span>Cash On Delivery</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- COD Section Begin -->
+<div class="register-login-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3" align="center">
+                <div class="register-form">
+                    <h2 style="margin-bottom: 0px;">Payment Status Regarding Your Order ID: {{order_id}}</h2>
+                    <h2 style="margin-bottom: 0px;">Your order is Cash On Delivery</h2>
+                    <h2>You should pay at delivery time.</h2>
+                    <i class="fad fa-hand-holding-box"></i> <br> <br>
+                    <div style="text-align: center;">
+                        <a href="/order" style="text-align: center;">
+                            <input type="submit" class="site-btn register-btn" value="Go To Order">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- COD Section End -->
+{% endblock content %}

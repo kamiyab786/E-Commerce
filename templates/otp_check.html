@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% load static %} {% block title %} OTP Check {% endblock %} {% block content %}
+
+<!-- OTP Check Section Begin -->
+<div class="register-login-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="register-form">
+                    <h2>OTP Check</h2>
+                    {% for msg in messages %}
+                    <div class="alert alert-danger" style="text-align: center;">
+                        <strong>{{msg}}</strong>
+                    </div>
+                    {% endfor %}
+                    <form action="otpcheck" method="post">
+                        {% csrf_token %}
+                        <h4 style="text-align: center;">OTP for verification sent to Your Email</h4>
+                        <div class="group-input">
+                            <label for="otp">Enter Your OTP Here</label>
+                            <input type="text" name="otp">
+                        </div>
+                        <input type="submit" class="site-btn register-btn" value="SUBMIT">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- OTP Check Section End -->
+{% endblock content %}

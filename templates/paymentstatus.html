@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Payment Status {% endblock %} {% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href='/'><i class="fas fa-home"></i> Home</a>
+                    <span>Payment Status</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Payment Status Section Begin -->
+<div class="register-login-section spad" style="justify-items: center;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="register-form">
+                    <h2>Payment Status Regarding Your Order ID: {{response.ORDERID}}</h2>
+                    {% if response.RESPCODE == '01' %}
+                    <div style="text-align: center;">
+                        <i class="fas fa-badge-check" style="font-size: 200px; color: green;"></i>
+                    </div>
+                    <h2>Payment Success</h2>
+                    <div style="text-align: center;">
+                        <a href="/order" style="text-align: center;">
+                            <input type="submit" class="site-btn register-btn" value="Go To Order">
+                        </a>
+                    </div>
+                    {% else %}
+                    <div style="text-align: center;">
+                        <i class="fa fa-times-circle" aria-hidden="true" style="font-size: 200px; color: red;"></i>
+                    </div>
+                    <h2>Payment Fail, Because {{response.RESPMSG}}</h2>
+                    <div style="text-align: center;">
+                        <a href="/checkout" style="text-align: center;">
+                            <input type="submit" class="site-btn register-btn" value="Go To Checkout & Re-payment Again">
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Payment Status Section End -->
+{% endblock content %}

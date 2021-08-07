@@ -1,0 +1,102 @@
+{% extends 'base.html' %} {% load static %} {% block title %} Cart {% endblock title %} {% block content %}
+<!-- Breadcrumb Section Begin -->
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text product-more">
+                    <a href="/"><i class="fas fa-home"></i> Home</a>
+                    <a href="/shop">Shop</a>
+                    <span>Cart</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb Section End -->
+
+<!-- Cart Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="cart-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Brand Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cart in carts %}
+                            <tr>
+                                <td class="cart-pic first-row"><img src="{{cart.product.product_pic.url}}" alt=""></td>
+                                <td class="cart-title first-row">
+                                    <h5>
+                                        <a href="{% url 'product' cart.product.id %}" style="color: #FE980F; text-decoration: underline;">{{cart.product.brand}}</a>
+                                    </h5>
+                                </td>
+                                <td class="p-price first-row"><i class="far fa-rupee-sign" style="font-size: 15px;"></i>{{cart.product.product_price}}</td>
+                                <td class="qua-col first-row">
+                                    <div class="quantity">
+                                        <div class="pro-qty">
+                                            <a class="dec qtybtn" pid="{{cart.product.id}}">-</a>
+                                            <span>{{cart.quantity}}</span>
+                                            <a class="inc qtybtn" pid="{{cart.product.id}}">+</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="total-price first-row">
+                                    <i class="far fa-rupee-sign" style="font-size: 15px;"></i>
+                                    <span id="product_price">
+                                        {% widthratio cart.quantity 1 cart.product.product_price %} 
+                                    </span>
+                                </td>
+                                <td class="close-td first-row ">
+                                    <a class="rmv qtybtn" pid="{{cart.product.id}}">
+                                        <i class="fa fa-trash" aria-hidden="true" style="font-size: 20px; cursor: pointer;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row ">
+                    <div class="col-lg-4 offset-lg-4">
+                        <div class="proceed-checkout">
+                            <ul>
+                                <li class="subtotal">Amount
+                                    <span>
+                                        <i class="far fa-rupee-sign" style="font-size: 15px;"></i>
+                                        <span id="amount">{{amount}}</span>
+                                    </span>
+                                </li>
+                                <li class="subtotal">Shipping
+                                    <span>
+                                        <i class="far fa-rupee-sign" style="font-size: 15px;"></i>
+                                        <span id="shipping_amount">{{shipping_amount}}</span>
+                                    </span>
+                                </li>
+                                <li class="cart-total">Total Amount
+                                    <span>
+                                        <i class="far fa-rupee-sign" style="font-size: 15px;"></i>
+                                        <span id="total_amount">{{total_amount}}</span>
+                                    </span>
+                                </li>
+                            </ul>
+                            <a href="checkout" class="proceed-btn ">PROCEED TO CHECK OUT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Cart Section End -->
+{% endblock content %}
